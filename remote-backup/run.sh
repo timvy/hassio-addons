@@ -4,6 +4,7 @@ set -e
 CONFIG_PATH=/data/options.json
 
 # parse inputs from options
+SNAPSHOT_ENABLED=$(jq --raw-output ".take_snapshot" $CONFIG_PATH)
 SSH_ENABLED=$(jq --raw-output ".ssh_enabled" $CONFIG_PATH)
 SSH_HOST=$(jq --raw-output ".ssh_host" $CONFIG_PATH)
 SSH_PORT=$(jq --raw-output ".ssh_port" $CONFIG_PATH)
@@ -85,10 +86,15 @@ function delete-local-backup {
 }
 
 function create-local-backup {
-    name="Automated backup $(date +'%Y-%m-%d %H:%M')"
-    echo "Creating local backup: \"${name}\""
-    slug=$(hassio snapshots new --raw-json --name="${name}" | jq --raw-output '.data.slug')
-    echo "Backup created: ${slug}"
+
+
+    if [ "$SNAPSHOT_ENABLED" = true ] ; then
+        name="Automated backup $(date +'%Y-%m-%d %H:%M')"
+        echo "Creating local backup: \"${name}\""
+        slug=$(hassio snapshots new --raw-json --name="${name}" | jq --raw-output '.data.slug')
+        echo "Backup created: ${slug}"
+    fi
+    
 }
 
 function rsync_folders {
