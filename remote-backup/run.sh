@@ -50,6 +50,12 @@ function copy-backup-to-remote {
 
     if [ "$SSH_ENABLED" = true ] ; then
         cd /backup/
+        
+        if [ "$SNAPSHOT_ENABLED" = false ] ; then
+            echo "Copying all tars to ${REMOTE_DIRECTORY} on ${SSH_HOST} using SCP"
+            scp -F "${HOME}/.ssh/config" *.tar remote:"${REMOTE_DIRECTORY}"
+
+        else 
         if [[ -z $ZIP_PASSWORD  ]]; then
             echo "Copying ${slug}.tar to ${REMOTE_DIRECTORY} on ${SSH_HOST} using SCP"
             scp -F "${HOME}/.ssh/config" "${slug}.tar" remote:"${REMOTE_DIRECTORY}"
