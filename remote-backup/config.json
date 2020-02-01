@@ -17,6 +17,7 @@
   "hassio_role": "backup",
   "map": ["config", "addons", "share", "ssl", "backup:rw"],
   "options": {
+    "take_snapshot": true,
     "ssh_enabled": true,
     "ssh_host": "",
     "ssh_port": 22,
