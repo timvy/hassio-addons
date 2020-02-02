@@ -53,7 +53,7 @@ function copy-backup-to-remote {
         
         if [ "$SNAPSHOT_ENABLED" = false ] ; then
             echo "Copying all tars to ${REMOTE_DIRECTORY} on ${SSH_HOST} using SCP"
-            scp -F "${HOME}/.ssh/config" *.tar remote:"${REMOTE_DIRECTORY}"
+            rsync -avz -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ${HOME}/.ssh/id" /backup/ ${RSYNC_USER}@${SSH_HOST}::NetBackup/nuc/backup/
 
         else 
             if [[ -z $ZIP_PASSWORD  ]]; then
