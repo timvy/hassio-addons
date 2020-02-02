@@ -1,6 +1,6 @@
 {
   "name": "Tim's Remote Backup",
-  "version": "4.2.6",
+  "version": "5.0.0",
   "slug": "remote_backup",
   "description": "Exploit snapshots and SCP/rsync to create remote backups to specified server",
   "url": "https://github.com/timvy/hassio-addons/blob/master/README.md",
