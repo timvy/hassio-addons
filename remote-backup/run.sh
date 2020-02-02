@@ -51,20 +51,20 @@ function copy-backup-to-remote {
     if [ "$SSH_ENABLED" = true ] ; then
         cd /backup/
         
-        if [ "$SNAPSHOT_ENABLED" = false ] ; then
+#        if [ "$SNAPSHOT_ENABLED" = false ] ; then
             echo "Copying all tars to ${REMOTE_DIRECTORY} on ${SSH_HOST} using SCP"
             rsync -avz -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ${HOME}/.ssh/id" /backup/ ${RSYNC_USER}@${SSH_HOST}::NetBackup/nuc/backup/
 
-        else 
-            if [[ -z $ZIP_PASSWORD  ]]; then
-                echo "Copying ${slug}.tar to ${REMOTE_DIRECTORY} on ${SSH_HOST} using SCP"
-                scp -F "${HOME}/.ssh/config" "${slug}.tar" remote:"${REMOTE_DIRECTORY}"
-            else
-                echo "Copying password-protected ${slug}.zip to ${REMOTE_DIRECTORY} on ${SSH_HOST} using SCP"
-                zip -P "$ZIP_PASSWORD" "${slug}.zip" "${slug}".tar
-                scp -F "${HOME}/.ssh/config" "${slug}.zip" remote:"${REMOTE_DIRECTORY}" && rm "${slug}.zip"
-            fi
-        fi 
+#        else 
+#            if [[ -z $ZIP_PASSWORD  ]]; then
+#                echo "Copying ${slug}.tar to ${REMOTE_DIRECTORY} on ${SSH_HOST} using SCP"
+#                scp -F "${HOME}/.ssh/config" "${slug}.tar" remote:"${REMOTE_DIRECTORY}"
+#            else
+#                echo "Copying password-protected ${slug}.zip to ${REMOTE_DIRECTORY} on ${SSH_HOST} using SCP"
+#                zip -P "$ZIP_PASSWORD" "${slug}.zip" "${slug}".tar
+#                scp -F "${HOME}/.ssh/config" "${slug}.zip" remote:"${REMOTE_DIRECTORY}" && rm "${slug}.zip"
+#            fi
+#        fi 
     fi
 }
 
